@@ -1,0 +1,7 @@
+header{
+    height:10px;
+    background-color:beige;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

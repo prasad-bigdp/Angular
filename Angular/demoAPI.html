@@ -1,0 +1,22 @@
+<!--Application Programming Interface-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Demo</title>
+</head>
+<body>
+    
+    <script>
+        const url= 'https://jsonplaceholder.typicode.com/todos/4'
+        fetch(url)
+        .then((res)=>{
+            console.log(res);
+            return res.json()
+        })
+        .then((data)=>console.log(data));
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+Components in Angular
+
+What is a Component?
+
+A component is a basic building block of an Angular application.
+It represents a part of the user interface (UI) and the associated logic.
+Components are typically designed to be reusable and self-contained.
+Creating a Component
+
+You can create a component manually or using the Angular CLI (Command Line Interface) with the ng generate component component-name command.
+
+Example:
+
+ng generate component my-component
+
+Anatomy of a Component
+
+Each component consists of three primary parts:
+
+Component Class (component-name.component.ts):
+
+The component class is written in TypeScript and contains the component's logic and data.
+It is decorated with the @Component decorator, which provides metadata about the component, such as the selector, template, and styles.
+Component Template (component-name.component.html):
+
+The template is an HTML file that defines the structure of the component's view.
+You can use interpolation, directives, and data binding to display dynamic content.
+Component Styles (component-name.component.css, component-name.component.scss, or component-name.component.less):
+
+The styles file contains the component's CSS or SCSS code.
+You can use CSS classes to style the component.
+Component Metadata
+
+The @Component decorator provides metadata that configures the component:
+
+selector: A CSS selector that identifies an element in the DOM where the component will be rendered.
+template or templateUrl: The HTML template used to render the component's view.
+styleUrls: An array of external CSS/SCSS/LESS files used to style the component.
+providers: An array of services or dependencies that the component requires.
+Data Binding
+
+Data binding allows you to bind data from the component class to the component template and vice versa.
+
+Interpolation: Data is displayed in the template using double curly braces {{ }}.
+
+Property Binding: You can bind to an element's property (e.g., disabled, src) using square brackets [ ].
+
+Event Binding: You can bind to an element's events (e.g., click, input) using parentheses ( ).
+
+Component Lifecycle
+
+Components have a lifecycle that includes events like ngOnInit, ngOnChanges, and ngOnDestroy. These lifecycle hooks allow you to perform actions at specific moments during a component's existence.
+Input and Output
+
+Components can communicate with other components by using @Input and @Output properties.
+
+@Input: Allows a parent component to pass data to a child component.
+@Output: Allows a child component to emit events to a parent component.
+Component Interaction
+
+Components can interact with one another, and this interaction can be hierarchical, where parent components interact with child components and vice versa.
+Component-Based Architecture
+
+Angular applications are structured around a component-based architecture, where different parts of the UI are represented as components.
+This architecture promotes reusability and modularity, making it easier to maintain and scale applications.
+Creating a Component Hierarchy
+
+You can create a component hierarchy, where a parent component encapsulates child components. This hierarchy allows you to break down complex UIs into smaller, manageable parts.

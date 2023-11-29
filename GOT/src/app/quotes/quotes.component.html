@@ -1,0 +1,15 @@
+<h1>Top Quotes from Game Of Thrones</h1>
+<div class="card-container">
+  <div class="card" *ngFor="let quote of quotes">
+    <div class="card-body">
+      <p class="sentence">
+        <strong>" {{ quote.sentence }} "</strong>
+      </p>
+      <br />
+      <p><strong> Character:</strong> {{ quote.character.name }}</p>
+      <p><strong> Character Slug:</strong> {{ quote.character.slug }}</p>
+      <p><strong> House:</strong> {{ quote.character.house.name }}</p>
+      <p><strong> House Slug:</strong> {{ quote.character.house.slug }}</p>
+    </div>
+  </div>
+</div>

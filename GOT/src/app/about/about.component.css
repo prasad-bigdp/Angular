@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+}
+img {
+  width: 550px;
+  height: 93vh;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+h1 {
+  text-align: justify;
+  margin-top: 75px;
+  font-size: 32px;
+  font-family: oswald;
+}
+
+p {
+  text-align: justify;
+  margin-right: 50px;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}

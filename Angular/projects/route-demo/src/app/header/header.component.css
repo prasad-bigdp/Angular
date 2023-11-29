@@ -1,0 +1,6 @@
+header
+{
+    display: flex; gap: 20px;background-color: aliceblue;
+    text-decoration: none;
+    justify-content: end;
+}

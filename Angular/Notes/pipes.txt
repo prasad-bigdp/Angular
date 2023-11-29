@@ -1,0 +1,78 @@
+In Angular, pipes are a feature that allows you to transform and format data in your templates. They are used to take an input value, process it, and then display the transformed value in the template. Angular provides a set of built-in pipes, and you can also create custom pipes when you need to apply specific transformations to your data.
+
+Built-in Pipes in Angular:
+{{ expression | uppercase }}: Transforms the text to all uppercase.
+
+Example:
+
+{{ 'hello' | uppercase }} <!-- Output: HELLO -->
+{{ expression | lowercase }}: Transforms the text to all lowercase.
+
+E
+{{ 'Hello' | lowercase }} <!-- Output: hello -->
+{{ expression | titlecase }}: Capitalizes the first letter of each word.
+
+Example:
+
+{{ 'hello world' | titlecase }} <!-- Output: Hello World -->
+{{ expression | currency:code:display:digitInfo }}: Formats a number as a currency using the specified code and display format.
+
+Example:
+{{ 1000 | currency:'USD':'symbol':'1.2-2' }} <!-- Output: $1,000.00 -->
+{{ expression | date:format:timezone }}: Formats a date according to the provided format and timezone.
+
+Example:
+
+{{ today | date:'MM/dd/yyyy' }} <!-- Output: 11/08/2023 -->
+{{ expression | slice:start:end }}: Returns a portion of a string or array.
+
+Example:
+
+{{ 'abcdef' | slice:1:4 }} <!-- Output: bcd -->
+{{ expression | json }}: Formats an object as a JSON string for debugging.
+
+Example:
+
+{{ {name: 'John', age: 30} | json }}
+<!-- Output: {"name":"John","age":30} -->
+{{ expression | async }}: Used with asynchronous operations like Observables, it unwraps the value from a promise or observable.
+
+Example:
+
+html
+Copy code
+{{ observableData | async }}
+{{ expression | percent:digitInfo }}: Formats a number as a percentage.
+
+Example:
+
+{{ 0.75 | percent:'2.1-2' }} <!-- Output: 75.00% -->
+{{ expression | number:digitInfo }}: Formats a number with optional thousand separators and decimal places.
+Example:
+
+{{ 1234.567 | number:'1.2-2' }} <!-- Output: 1,234.57 -->
+Creating Custom Pipes in Angular:
+You can create your custom pipes in Angular when the built-in pipes don't provide the transformation you need. Here are the steps to create a custom pipe:
+
+Generate a Pipe: You can use the Angular CLI to generate a new pipe with the ng generate pipe command:
+
+ng generate pipe myCustomPipe
+Define the Pipe: Open the generated .ts file (e.g., my-custom-pipe.pipe.ts) and implement the PipeTransform interface. You need to provide the transform method, which takes an input and any number of optional arguments.
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'myCustomPipe'
+})
+export class MyCustomPipe implements PipeTransform {
+  transform(value: any, arg1: any, arg2: any): any {
+    // Perform your custom transformation here
+    return transformedValue;
+  }
+}
+Use the Custom Pipe: In your templates, you can use your custom pipe just like any other pipe:
+
+{{ someData | myCustomPipe:arg1:arg2 }}
+The input value (someData) will be passed to your custom pipe's transform method, along with any provided arguments (arg1, arg2).
+
+That's how you can create and use custom pipes in Angular to perform specific data transformations in your templates. Custom pipes are a powerful way to encapsulate data formatting logic and make your templates more readable and maintainable.

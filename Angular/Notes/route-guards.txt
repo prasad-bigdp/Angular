@@ -1,0 +1,163 @@
+let's go through detailed examples for each type of route guard in Angular.
+
+Route Guard
+canActivate-- it will perform logic before ypur route gets activated
+
+
+
+1. CanActivate Guard
+Example: AuthGuard for protecting a route based on user authentication.
+
+// auth.guard.ts
+
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ) {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    } else {
+      // Redirect to login page if not logged in
+      return this.router.parseUrl('/login');
+    }
+  }
+}
+2. CanActivateChild Guard
+Example: AuthChildGuard for protecting child routes based on user roles.
+
+// auth-child.guard.ts
+
+import { Injectable } from '@angular/core';
+import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthChildGuard implements CanActivateChild {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivateChild(
+    childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    if (this.authService.hasAdminRole()) {
+      return true;
+    } else {
+      // Redirect to access denied page if not admin
+      return this.router.parseUrl('/access-denied');
+    }
+  }
+}
+3. CanDeactivate Guard
+Example: ConfirmDeactivateGuard for confirming navigation away from a form.
+
+// confirm-deactivate.guard.ts
+
+import { Injectable } from '@angular/core';
+import { CanDeactivate } from '@angular/router';
+import { Observable } from 'rxjs';
+
+export interface CanComponentDeactivate {
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ConfirmDeactivateGuard
+  implements CanDeactivate<CanComponentDeactivate>
+{
+  canDeactivate(
+    component: CanComponentDeactivate
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    return component.canDeactivate ? component.canDeactivate() : true;
+  }
+}
+4. CanLoad Guard
+Example: FeatureLoadGuard for loading a feature module based on user authentication.
+// feature-load.guard.ts
+
+import { Injectable } from '@angular/core';
+import { CanLoad, Route, UrlSegment, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FeatureLoadGuard implements CanLoad {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    } else {
+      // Redirect to login page if not logged in
+      return this.router.parseUrl('/login');
+    }
+  }
+}
+Using the Guards in Routes
+// app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './login/login.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { AuthGuard } from './auth.guard';
+import { AuthChildGuard } from './auth-child.guard';
+import { ConfirmDeactivateGuard } from './confirm-deactivate.guard';
+import { FeatureLoadGuard } from './feature-load.guard';
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthChildGuard],
+    canDeactivate: [ConfirmDeactivateGuard],
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard, AuthChildGuard],
+    canDeactivate: [ConfirmDeactivateGuard],
+    canLoad: [FeatureLoadGuard],
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'access-denied', component: AccessDeniedComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+In this example:
+
+AuthGuard is used for the profile route.
+AuthChildGuard is used for the child routes of profile and admin.
+ConfirmDeactivateGuard is used for confirming navigation away from the profile route.
+FeatureLoadGuard is used for lazy-loaded routes, preventing the loading of the admin feature module if the user is not logged in.
+Remember to provide these guards in the providers array of your module or at the root level (providedIn: 'root')

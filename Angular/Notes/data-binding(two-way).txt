@@ -1,0 +1,70 @@
+Two-way data binding in Angular combines both property binding and event binding to keep the data in the component and the view in sync. It's typically used with the ngModel directive, which is part of the FormsModule. To set up two-way data binding, you need to import FormsModule and use the [(ngModel)] syntax.
+
+Here's how to set up ngModel and implement two-way data binding in Angular:
+
+Importing and Setting up FormsModule:
+
+In your Angular module, import the FormsModule and add it to the imports array.
+
+// Import the FormsModule
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  imports: [
+    FormsModule, // Add FormsModule here
+  ],
+  // ...
+})
+export class AppModule { }
+Two-Way Data Binding with Input:
+
+Use [(ngModel)] for two-way data binding. In this example, we bind an input field to a component property, so changes in the input field automatically update the property, and changes to the property update the input field.
+
+<!-- Component Template -->
+<input [(ngModel)]="name" placeholder="Enter your name">
+<p>Hello, {{ name }}!</p>
+
+// Component Class
+export class AppComponent {
+  name: string = '';
+}
+Two-Way Data Binding with Select Box:
+
+You can use two-way data binding with select boxes as well.
+
+<!-- Component Template -->
+<select [(ngModel)]="selectedColor">
+  <option value="red">Red</option>
+  <option value="blue">Blue</option>
+  <option value="green">Green</option>
+</select>
+<p>You selected: {{ selectedColor }}</p>
+
+// Component Class
+export class AppComponent {
+  selectedColor: string = '';
+}
+Two-Way Data Binding with Textarea:
+
+Textareas can also benefit from two-way data binding.
+
+<!-- Component Template -->
+<textarea [(ngModel)]="message" placeholder="Type a message"></textarea>
+<p>Your message: {{ message }}</p>
+
+// Component Class
+export class AppComponent {
+  message: string = '';
+}
+Two-Way Data Binding with Checkbox:
+
+Two-way data binding can be used with checkboxes to track the checked state.
+
+<!-- Component Template -->
+<input type="checkbox" [(ngModel)]="isChecked"> Check this box
+<p>Checkbox is checked: {{ isChecked }}</p>
+
+// Component Class
+export class AppComponent {
+  isChecked: boolean = false;
+}

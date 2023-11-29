@@ -1,0 +1,105 @@
+
+Lazy loading in Angular is a technique that allows you to load parts of your application only when they are needed, rather than loading the entire application upfront. This can significantly improve the initial loading time of your application, especially for large applications with multiple feature modules. Lazy loading is achieved through the Angular Router by splitting your application into feature modules.
+
+Here's how lazy loading works in Angular:
+
+Create Feature Modules:
+
+Identify parts of your application that can be loaded lazily and organize them into feature modules.
+Each feature module should have its own routing module.
+Configure Lazy Loading Routes:
+
+In the main app-routing.module.ts file, configure routes to the feature modules using the loadChildren property.
+The loadChildren property takes a string that specifies the path to the module file (without the file extension) and the name of the module class.
+
+// app-routing.module.ts
+
+const routes: Routes = [
+  { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'lazy',
+    loadChildren: () => import('./lazy/lazy.module').then((m) => m.LazyModule),
+  },
+  { path: '**', component: NotFoundComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+Create Feature Module Routing:
+
+Inside the feature module, create a routing module that defines the routes specific to that module.
+
+// lazy-routing.module.ts
+
+const routes: Routes = [
+  { path: '', component: LazyComponent },
+  { path: 'details', component: LazyDetailsComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class LazyRoutingModule {}
+Load the Module Dynamically:
+
+The import('./lazy/lazy.module').then((m) => m.LazyModule) syntax is used to load the module dynamically when the route is accessed.
+Angular will fetch the module file only when the user navigates to the lazy route.
+Accessing Lazy-Loaded Modules:
+
+When the user navigates to a lazy-loaded route, Angular fetches the corresponding module and renders the associated components.
+Here's a more detailed example:
+
+// app-routing.module.ts
+
+const routes: Routes = [
+  { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'lazy',
+    loadChildren: () => import('./lazy/lazy.module').then((m) => m.LazyModule),
+  },
+  { path: '**', component: NotFoundComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+
+// lazy/lazy.module.ts
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { LazyRoutingModule } from './lazy-routing.module';
+import { LazyComponent } from './lazy.component';
+import { LazyDetailsComponent } from './lazy-details/lazy-details.component';
+
+@NgModule({
+  declarations: [LazyComponent, LazyDetailsComponent],
+  imports: [CommonModule, LazyRoutingModule],
+})
+export class LazyModule {}
+
+// lazy/lazy-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LazyComponent } from './lazy.component';
+import { LazyDetailsComponent } from './lazy-details/lazy-details.component';
+
+const routes: Routes = [
+  { path: '', component: LazyComponent },
+  { path: 'details', component: LazyDetailsComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class LazyRoutingModule {}
+With this setup, the LazyModule and its associated components (LazyComponent and LazyDetailsComponent) will only be loaded when the user navigates to the '/lazy' route. The initial loading time of your application is improved because the code for the lazy-loaded module is fetched asynchronously only when needed.

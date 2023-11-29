@@ -1,0 +1,18 @@
+.container
+{
+    margin-top: 20px;
+display: grid;
+grid-template-columns: repeat(3,auto);
+gap:20px;
+}
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 5px black;
+}
+.card img
+{
+    height: 100px;
+    width: 100px;
+}

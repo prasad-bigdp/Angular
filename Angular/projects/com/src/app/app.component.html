@@ -1,0 +1,23 @@
+<!-- <h1>This is parent component</h1> -->
+<div  style="">
+<!-- <div *ngFor="let fr of fruits">
+  <app-main fruit="{{fr.fruit}}" image="{{fr.img}}"></app-main>
+
+</div>  -->
+ <!-- <app-main (eve)="fun($event)"></app-main> -->
+<!-- {{msg1}}  -->
+<!--
+  
+  (eve)="fun($event) means when eve performed take that value to fun
+  
+  <app-main [name]="names[0]"></app-main>
+<app-main [name]="names[1]"></app-main>
+<app-main [name]="names[2]"></app-main> -->
+<app-main #child></app-main>
+<button (click)="child.greet()">Click</button>
+<!-- <div #pr>Hello World</div>
+<div #pr>Hello Wo</div>
+
+<button (click)="changeBG()">Change</button>
+</div> -->
+

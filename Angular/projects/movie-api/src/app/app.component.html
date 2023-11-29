@@ -1,0 +1,20 @@
+
+<div class="container text-center">
+  <h1 class="text-center">Movie Search</h1>
+  <input type="text" [(ngModel)]="searchQuery" placeholder="Search for a movie" />
+<button (click)="onSearchInput()">Search</button>
+
+</div>
+<div class="row">
+<ul class="d-flex flex-wrap">
+  <li *ngFor="let movie of movies" class="card">
+    <div class="card-header">
+      {{ movie.Title }}
+    </div>
+   <div class="card-body">
+    <img src="{{movie.Poster}}" alt="{{movie.title}}" />
+   </div>
+  </li>
+</ul>
+</div>
+

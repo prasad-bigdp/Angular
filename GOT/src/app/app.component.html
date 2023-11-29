@@ -1,0 +1,20 @@
+<div class="navbar">
+  <ul fxLayout="row" fxLayoutAlign="space-between center">
+    <li><img [src]="imageUrl" alt="GOT_LOGO" /></li>
+    <li>
+      <button mat-button routerLink="/">Home</button>
+      <button mat-button routerLink="/quotes">Quotes</button>
+      <button mat-button routerLink="/about">About</button>
+      <button mat-button routerLink="/contact">Contact</button>
+    </li>
+    <li>
+      <div class="search-box">
+        <input type="text" placeholder="Type to Search..." />
+        <div class="search-icon">
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

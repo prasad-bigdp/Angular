@@ -1,0 +1,46 @@
+<!-- <h1> I'm  template</h1>
+<input type="text" value="{{val}}" [disabled]="isPrasad">
+<p>Name: {{ name  }}</p>
+<p [style.color]="color" [ngStyle]="{'color':color,'backgroundColor':bgclr}">Id: {{ id}}</p>
+<p [ngClass]="fun()">Email: {{email}}</p>
+<button [disabled]="isPrasad" (click)="result($event)">Click</button>
+ Two way Data binding -->
+<!-- <div>
+  <input type="text" placeholder="Enter name" [(ngModel)]='val' #text><br>
+two way value: {{val}} <br>
+{{text.value}}
+</div>  -->
+
+<!-- <div #happy><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas et optio assumenda quis! Animi, sequi molestias perferendis dolorum doloribus optio fuga recusandae excepturi tenetur? Veniam fugit repudiandae doloribus blanditiis repellendus magnam neque labore quo, error, id quod eveniet iure? Aperiam ex consequatur magni expedita, vel totam veritatis vero beatae autem.</p></div> -->
+
+<div *ngIf="isAdmin">
+   <div *ngIf="isPrasad then pr else nr">
+   </div> 
+  
+      <ng-template #pr>Hello Prasad</ng-template>
+
+     <ng-template #nr>Hello Narendra</ng-template>
+        <button (click)="fun()">click</button>
+
+</div>
+
+<!--
+
+  if(false)
+  {
+    hello prasad
+  }
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+

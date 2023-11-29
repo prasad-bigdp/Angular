@@ -1,0 +1,64 @@
+<div class="container">
+    <mat-toolbar color="primary">
+        <span>CRUD App</span>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="accent" (click)="add()">Add</button>
+    </mat-toolbar>
+
+    <div *ngIf="data">
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Author </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.author}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary" (click)="update(element.id, element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="delete(element.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+
+    <div *ngIf="showForm" class="formContainer">
+        <div class="popup">
+            <form #myform="ngForm" class="form" (ngSubmit)="addData(myform.value)">
+                <mat-form-field>
+                    <label>Title</label>
+                    <input matInput ngModel name="title" [(ngModel)]="title" required />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <label>Author</label>
+                    <input matInput ngModel name="author" [(ngModel)]="author" required />
+                </mat-form-field>
+
+                <div class="buttons">
+                    <button mat-raised-button color="primary" type="submit">{{editMode ? 'Update' : 'Add'}}</button>
+                    <button mat-raised-button color="warn" (click)="closeForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

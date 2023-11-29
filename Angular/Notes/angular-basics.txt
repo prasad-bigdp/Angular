@@ -1,0 +1,135 @@
+What is Angular?
+
+Angular is a popular open-source web application framework developed by Google and a community of individual developers and corporations.
+It's a complete rewrite of AngularJS, designed to build dynamic, modern, and scalable web applications.
+Key Features of Angular:
+
+Component-Based Architecture:
+
+Angular applications are organized into components, which are reusable and self-contained building blocks that encapsulate the application's logic, data, and user interface.
+Two-Way Data Binding:
+
+Angular provides two-way data binding, meaning changes in the model (data) are automatically reflected in the view (UI), and vice versa. This simplifies the management of application state.
+Dependency Injection:
+
+Angular uses a powerful dependency injection system that helps manage the application's dependencies and promotes modularity and testability.
+Templates and Directives:
+
+Angular templates allow developers to create dynamic views by extending HTML with special syntax. Directives, such as ngFor and ngIf, enhance HTML's capabilities.
+Routing and Navigation:
+
+Angular includes a powerful router for managing application navigation. Developers can define routes and create single-page applications with multiple views.
+HTTP Client:
+
+Angular's HTTP client simplifies making asynchronous HTTP requests to retrieve or send data to a server.
+Forms and Validation:
+
+Angular provides robust support for creating forms, including both template-driven forms and reactive forms with validation.
+State Management:
+
+Angular applications can use services, observables, and ngrx/store for managing application state and sharing data between components.
+Testing:
+
+Angular has a strong focus on testing, making it easy to write unit tests and end-to-end tests for your application.
+Cross-Platform Development:
+
+With Angular, you can build not only web applications but also mobile applications (using Angular and Ionic) and desktop applications (using Electron).
+Community and Ecosystem:
+
+Angular has a vibrant community and a rich ecosystem of third-party libraries, tools, and extensions.
+How Angular Works:
+
+Angular applications start with a root module that defines the application's structure and dependencies. The module is bootstrapped to start the application.
+The application is composed of components, which have templates, logic, and styles.
+Components can communicate with each other through inputs and outputs. Parent components can pass data to child components, and child components can emit events to communicate with their parent.
+Angular takes care of rendering the components, responding to user interactions, and managing the application state.
+Development Tools:
+
+The Angular CLI (Command Line Interface) is a powerful tool for creating, building, and testing Angular applications. It simplifies many development tasks.
+Versions of Angular:
+
+There are multiple versions of Angular, including AngularJS (1.x) and Angular (2+). The current major version is simply referred to as Angular.
+Migrating from AngularJS:
+
+Migrating from AngularJS (1.x) to Angular (2+) can be a significant undertaking due to the architectural differences between the two. Angular provides a migration guide and tools to help with this transition.
+
+First App:
+Starting your first Angular project is a straightforward process. I'll guide you through the steps to create a basic Angular application. Before you begin, make sure you have Node.js and the Angular CLI (Command Line Interface) installed. If you don't have them installed, you can do so by following these steps:
+
+Install Node.js:
+
+You can download and install Node.js from the official website: Node.js Download
+Install Angular CLI:
+
+Open your terminal or command prompt and run the following command to install the Angular CLI globally:
+bash
+Copy code
+npm install -g @angular/cli
+Now that you have Node.js and Angular CLI installed, you can create your first Angular project:
+
+Step 1: Create a New Angular Project
+
+Open your terminal or command prompt and navigate to the directory where you want to create your Angular project. Then, use the Angular CLI to create a new project. Replace "my-first-angular-app" with your project's name:
+ng new my-first-angular-app
+The Angular CLI will prompt you to answer several questions. You can press Enter to accept the default options or provide your preferences. This process will set up a new Angular project in a directory with the name you provided.
+
+To create only workspace without project , use following command:
+ng new my-first-angular-app --create-application=false
+
+
+Step 2: Navigate to Your Project Directory
+
+Navigate to your project directory using the cd command:
+
+cd my-first-angular-app
+Step 3: Run Your Angular Application
+
+You can now serve your Angular application using the following command:
+ng serve
+This will start a development server and provide you with a local development environment. Open your web browser and go to http://localhost:4200/. You should see your newly created Angular application.
+
+Step 4: Edit Your Application
+
+You can now start editing your application. The main files you'll work with are located in the src directory. You can find the main application component in src/app/app.component.ts and its template in src/app/app.component.html. You can make changes to these files to see how your application behaves.
+
+Step 5: Learn Angular
+
+To develop Angular applications effectively, it's essential to learn the framework's concepts, including components, modules, services, and routing. Angular's official documentation (https://angular.io/docs) is an excellent resource for getting started and learning more about Angular.
+
+
+Folder Structure:
+When you create a new Angular project using the Angular CLI (ng new project-name), several files and directories are generated. Each of these files and directories serves a specific purpose in your Angular application. Here's an explanation of the most important ones:
+
+src/app/: This directory contains your application's components, templates, and styles.
+
+app.component.ts: This is the root component of your application. It defines the component's class and its metadata, including the template and styles. It's where your application starts.
+
+app.component.html: This file contains the HTML template for the root component.
+
+app.component.css: This file contains the component's styles in CSS.
+
+app.module.ts: This is the root module of your application, which defines how different parts of your application fit together. It imports other modules and declares components.
+
+src/assets/: This directory is used for static assets like images, fonts, and other files that don't need to be compiled.
+
+
+src/index.html: The main HTML file for your application. This is where the application is initialized.
+
+src/main.ts: The main entry point for your application. It bootstraps the Angular application and imports the root module (app.module.ts).
+
+
+src/styles.css: This is the global styles file for your application. You can define common styles that should apply to the entire application here.
+
+angular.json: This is the configuration file for the Angular CLI. It includes settings for build, serve, and other CLI commands.
+
+tsconfig.json: The TypeScript configuration file, which defines the TypeScript compiler options for your project.
+
+tsconfig.app.json: A subset of the main TypeScript configuration, specific to your Angular application.
+
+tsconfig.spec.json: TypeScript configuration for testing.
+
+
+package.json: The project's dependencies and scripts configuration. It lists the packages your project depends on and contains scripts to run tasks like starting the development server.
+
+
+README.md: The README file for your project, often containing instructions and documentation.

@@ -1,0 +1,8 @@
+<h1>Main page</h1>
+<div >
+  <ul>
+    <li *ngFor="let u of users" (click)="call(u.id)" style="list-style-type: none;"><div><a routerLink="./users">{{u.name}}-{{u.Age}}</a></div></li>
+  </ul>
+
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,89 @@
+Routing in Angular refers to the mechanism that allows you to navigate between different components and views based on the URL. Angular's built-in router provides a powerful and flexible way to implement navigation in your application. Here's an overview of how routing works in Angular:
+
+Key Concepts:
+Router Module (RouterModule):
+
+Angular's routing functionality is provided by the RouterModule. You need to import this module in your Angular application to enable routing.
+
+// app.module.ts
+import { RouterModule } from '@angular/router';
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+Routes:
+
+Routes are an array of route definitions that map URLs to Angular components. Each route is an object that defines a path and the component to be displayed when the path is navigated to.
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+];
+Router Outlet:
+
+The <router-outlet></router-outlet> directive is used as a placeholder in the template where the routed component will be displayed.
+
+<!-- app.component.html -->
+<router-outlet></router-outlet>
+RouterLink:
+
+The routerLink directive is used for creating navigation links in your templates. It generates the appropriate navigation URLs based on the route configuration.
+
+<!-- app.component.html -->
+<a routerLink="/">Home</a>
+<a routerLink="/about">About</a>
+<a routerLink="/contact">Contact</a>
+Basic Usage:
+Setting Up Routes:
+
+Define your routes in the Routes array.
+Configuring RouterModule:
+
+Import RouterModule in your main AppModule and configure it with the defined routes using RouterModule.forRoot(routes).
+Router Outlet:
+
+Place <router-outlet></router-outlet> in your main template. This is where the routed components will be rendered.
+RouterLink:
+
+Use the routerLink directive in your templates to create navigation links.
+Route Parameters:
+You can include route parameters to make your routes dynamic. For example:
+
+const routes: Routes = [
+  { path: 'product/:id', component: ProductDetailComponent },
+];
+Access the parameter in the component:
+
+// product-detail.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+// ...
+
+constructor(private route: ActivatedRoute) {
+  this.route.params.subscribe(params => {
+    console.log(params.id); // Access the 'id' parameter
+  });
+}
+Nested Routes:
+You can create nested routes by defining child routes within a route configuration.
+const routes: Routes = [
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'settings', component: SettingsComponent },
+    ]
+  },
+];
+Route Guards:
+Route guards allow you to run code before a route is activated. Common guards include CanActivate, CanDeactivate, CanLoad, and Resolve.
+
+Lazy Loading:
+Lazy loading enables you to load modules and their associated components only when they are needed, reducing the initial bundle size.
+const routes: Routes = [
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+];
+This is a high-level overview of Angular routing. It provides a flexible and powerful mechanism for navigation and structuring your Angular applications. 

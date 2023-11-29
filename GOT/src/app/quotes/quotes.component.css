@@ -1,0 +1,41 @@
+.card-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  margin: 80px;
+  gap: 50px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  width: 400px;
+  height: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  text-align: justify;
+  font-size: 18px;
+  font-family: oswald;
+}
+
+.sentence {
+  font-size: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-family: oswald;
+  font-size: 32px;
+  margin-top: 35px;
+}

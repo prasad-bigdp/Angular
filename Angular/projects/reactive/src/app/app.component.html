@@ -1,0 +1,32 @@
+<h1>Reactive Forms</h1>
+<div>
+  <div *ngFor="let data of data$|async">
+  {{data.title}}
+  </div>
+</div>
+<form [formGroup]="myForm"  (ngSubmit)="submit()">
+  Email:
+  <input type="text" formControlName="uname">
+  <div class="errors" *ngIf="myForm.get('uname')?.touched&&myForm.get('uname')?.errors?.['required']">Email is Required</div>
+    <div class="errors" *ngIf="myForm.get('uname')?.touched&&myForm.get('uname')?.errors?.['upperCaseError']">atleast one capital letter needed
+    </div>
+    <div class="errors" *ngIf="myForm.get('uname')?.touched&&myForm.get('uname')?.errors?.['email']">Please enter valid Email
+    </div><br><br>
+  password:
+  <input type="password" formControlName="password"><br>
+  <div class="errors" *ngIf="myForm.get('password')?.touched&&myForm.get('password')?.errors?.['minlength']">Minimum length is 8 characters
+  </div><br>
+  Names:
+  <div formArrayName="names">
+    <div *ngFor="let name of names.controls;index as i">
+      <input type="text">
+      <button (click)="delete(i)">❎</button>
+    </div>
+
+    <button (click)="add()">add</button>
+    </div>
+  <button (click)="show()">click</button>
+  <button type="submit">Submit</button>
+</form>
+
+

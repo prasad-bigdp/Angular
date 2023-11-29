@@ -1,0 +1,12 @@
+<div>
+  <h1 class="text-center"> Todo Application </h1>
+  <br>
+  <div class="container" style="display: flex;">
+        <input type="text" class="form-control" [(ngModel)]=task>
+        <button class="btn btn-secondary" (click)="addTask()">Add</button>
+  </div>
+
+  <app-todo></app-todo>
+</div>
+
+<router-outlet></router-outlet>

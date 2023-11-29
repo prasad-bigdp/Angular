@@ -1,0 +1,41 @@
+<!-- app.component.html -->
+<div class="main" style="display: flex;flex-direction:column;justify-content: center;align-items: center;height: 100vh;width: 100vw;">
+<h1>Form Demo</h1>
+<form class="form" #myform="ngForm" (ngSubmit)="submit()">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Username:</mat-label>
+      <input matInput placeholder="Placeholder" id="un" ngModel #mybox="ngModel" name="username" required>
+    <mat-error>
+  <div class="errors" *ngIf="mybox.touched && mybox.errors?.['required']">Username is required</div>
+    </mat-error>
+      
+   
+      <mat-hint>Hint</mat-hint>
+    </mat-form-field>
+  </div>
+  <br>
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Email:</mat-label>
+      <input matInput type="email" placeholder="Enter email" id="em" ngModel #em="ngModel" name="email"
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+      <mat-error *ngIf="em.touched && em.errors?.['pattern']">Please enter a valid email</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Password:</mat-label>
+      <input matInput type="password" id="pswd" ngModel #mybox1="ngModel" name="pswrd" minlength="4">
+      <mat-error *ngIf="mybox1.touched && mybox1.errors?.['minlength']">Minimum 4 letters expected</mat-error>
+    </mat-form-field>
+  </div>
+
+  <br>
+
+  <button (click)="display(myform, em, mybox, mybox1)">Click</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!myform.form.valid">Submit Me</button>
+</form>
+</div>

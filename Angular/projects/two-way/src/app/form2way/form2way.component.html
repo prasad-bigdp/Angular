@@ -1,0 +1,46 @@
+<div>
+<div>
+  <h2>User Form</h2>
+  <form #userForm="ngForm" (ngSubmit)="submitForm(userForm.value)">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="nam" ngModel #nam="ngModel" required />
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" [(ngModel)]="formData.email" required />
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" [(ngModel)]="formData.password" required />
+     <br>
+    <label>Checkboxes:</label>
+    <div>
+      <input type="checkbox" id="option1" name="options" value="option1" [(ngModel)]="formData.options.option1" />
+      <label for="option1">Option 1</label>
+    </div>
+    <div >
+      <input type="checkbox" id="option2" name="options" value="option2" [(ngModel)]="formData.options.option2" />
+      <label for="option2">Option 2</label>
+    </div>
+
+    <label>Radio Buttons:</label>
+    <div>
+      <input type="radio" id="radio1" name="radio" value="radio1" [(ngModel)]="formData.radio" />
+      <label for="radio1">Radio 1</label>
+    </div>
+    <div>
+      <input type="radio" id="radio2" name="radio" value="radio2" [(ngModel)]="formData.radio" />
+      <label for="radio2">Radio 2</label>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+ <div *ngIf="submittedData">
+    <h2>Submitted Data</h2>
+    <pre>{{ submittedData | json }}</pre>
+  </div>
+</div>
+<div>
+    <h2>onChange Data</h2>
+{{nam.value}}
+</div>

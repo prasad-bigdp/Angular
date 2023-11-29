@@ -1,0 +1,41 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "books": [
+    {
+      "title": "dhghjghjgj",
+      "author": "mnbxcnmb",
+      "id": 4
+    },
+    {
+      "title": "jhdjhbc",
+      "author": "mnncbxmnbxc",
+      "id": 6
+    },
+    {
+      "title": "nbnnbv",
+      "author": "bvbnv",
+      "id": 7
+    },
+    {
+      "title": "vbnzxvbnc",
+      "author": "nbzvcbnv",
+      "id": 8
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

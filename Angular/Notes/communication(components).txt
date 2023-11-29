@@ -1,0 +1,552 @@
+Communication Between Parent and Child Components:
+1. parent to child:
+    To achieve this, we use @input decorator
+2. child to parent:
+     To achieve this, we use @output decorator
+or we can use template refernce variable
+or we can also use viewChild
+3. component to component
+  we use services
+
+In Angular, @Input, @Output, and @ViewChild are decorators used to facilitate communication between components and access elements in the component's view. Here are explanations and examples for each of them:
+
+1. @Input:
+
+The @Input decorator allows you to pass data from a parent component to a child component. It is typically used for properties that a parent component wants to share with its child components.
+Example:
+// ParentComponent
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child [message]="parentMessage"></app-child>
+  `,
+})
+export class ParentComponent {
+  parentMessage = 'This is a message from the parent component.';
+}
+
+// ChildComponent
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>{{ message }}</p>
+  `,
+})
+export class ChildComponent {
+  @Input() message: string;
+}
+In this example, the @Input decorator is used to pass the message property from the ParentComponent to the ChildComponent.
+Example 1: Parent to Child Communication using @Input
+
+In this example, we have a parent component and a child component. The parent component passes data to the child component using @Input.
+
+//Parent Component:
+
+parent.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child [message]="parentMessage"></app-child>
+  `,
+})
+export class ParentComponent {
+  parentMessage = 'Hello from the parent component!';
+}
+//Child Component:
+
+child.component.ts:
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>{{ message }}</p>
+  `,
+})
+export class ChildComponent {
+  @Input() message: string;
+}
+In this example, the parent component passes the parentMessage as an input to the child component. The child component uses @Input to receive and display the message.
+
+Example 2: Passing Objects with @Input
+
+You can also use @Input to pass complex objects from the parent component to the child component.
+
+Parent Component:
+
+parent.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child [person]="parentPerson"></app-child>
+  `,
+})
+export class ParentComponent {
+  parentPerson = {
+    name: 'Alice',
+    age: 25,
+  };
+}
+//Child Component:
+child.component.ts:
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>Name: {{ person.name }}</p>
+    <p>Age: {{ person.age }}</p>
+  `,
+})
+export class ChildComponent {
+  @Input() person: { name: string; age: number };
+}
+In this example, the parent component passes a person object to the child component. The child component uses @Input to receive and display the object's properties.
+
+Example 3: Dynamic Lists with @Input
+
+@Input can also be used to create dynamic lists in child components based on data passed from the parent component.
+
+//Parent Component:
+
+parent.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child [items]="parentItems"></app-child>
+  `,
+})
+export class ParentComponent {
+  parentItems = ['Item 1', 'Item 2', 'Item 3'];
+}
+//Child Component:
+child.component.ts:
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <ul>
+      <li *ngFor="let item of items">{{ item }}</li>
+    </ul>
+  `,
+})
+export class ChildComponent {
+  @Input() items: string[];
+}
+In this example, the parent component passes an array of items to the child component. The child component uses @Input to receive the array and dynamically generates a list based on the items.
+
+These examples demonstrate how @Input in Angular allows parent components to provide data to child components, enabling dynamic and flexible communication between them.
+
+2. @Output:
+
+The @Output decorator allows you to emit custom events from a child component to its parent component. This is useful for handling user interactions in child components and notifying the parent component about those interactions.
+
+Example:
+// ChildComponent
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <button (click)="sendMessage()">Send Message</button>
+  `,
+})
+export class ChildComponent {
+  @Output() messageEvent = new EventEmitter<string>();
+
+  sendMessage() {
+    this.messageEvent.emit('This is a message from the child component.');
+  }
+}
+
+// ParentComponent
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child (messageEvent)="receiveMessage($event)"></app-child>
+    <p>{{ receivedMessage }}</p>
+  `,
+})
+export class ParentComponent {
+  receivedMessage: string;
+
+  receiveMessage(message: string) {
+    this.receivedMessage = message;
+  }
+}
+In this example, the @Output decorator is used to emit a custom event from the ChildComponent, and the ParentComponent listens to this event using event binding.
+
+Example 1: Child to Parent Communication using @Output
+
+In this example, we have a parent component and a child component. The child component emits an event using @Output, and the parent component listens to and handles the event.
+
+Child Component:
+
+child.component.ts:
+
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <button (click)="sendMessage()">Send Message</button>
+  `,
+})
+export class ChildComponent {
+  @Output() messageEvent = new EventEmitter<string>();
+
+  sendMessage() {
+    const message = 'Hello from the child component!';
+    this.messageEvent.emit(message);
+  }
+}
+Parent Component:
+
+parent.component.ts:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child (messageEvent)="receiveMessage($event)"></app-child>
+    <p>{{ receivedMessage }}</p>
+  `,
+})
+export class ParentComponent {
+  receivedMessage: string;
+
+  receiveMessage(message: string) {
+    this.receivedMessage = message;
+  }
+}
+In this example, the child component emits a custom event using @Output, and the parent component listens to the event with (messageEvent)="receiveMessage($event)".
+
+Example 2: Emitting Custom Events with Data
+
+You can also emit custom events with data from the child component to the parent component.
+
+Child Component:
+
+child.component.ts:
+
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <button (click)="sendData()">Send Data to Parent</button>
+  `,
+})
+export class ChildComponent {
+  @Output() dataEvent = new EventEmitter<string>();
+
+  sendData() {
+    const data = 'Some data from the child component';
+    this.dataEvent.emit(data);
+  }
+}
+Parent Component:
+
+parent.component.ts:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child (dataEvent)="receiveData($event)"></app-child>
+    <p>Data received from child: {{ receivedData }}</p>
+  `,
+})
+export class ParentComponent {
+  receivedData: string;
+
+  receiveData(data: string) {
+    this.receivedData = data;
+  }
+}
+In this example, the child component emits an event with data, and the parent component handles the data using (dataEvent)="receiveData($event)".
+
+Example 3: Confirmation Dialog with @Output
+
+You can use @Output for interactive features, such as a confirmation dialog.
+
+Child Component:
+
+confirmation-dialog.component.ts:
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-confirmation-dialog',
+  template: `
+    <button (click)="confirm()">Confirm</button>
+  `,
+})
+export class ConfirmationDialogComponent {
+  @Output() confirmed = new EventEmitter<void>();
+
+  confirm() {
+    this.confirmed.emit();
+  }
+}
+Parent Component:
+
+parent.component.ts:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-confirmation-dialog (confirmed)="onConfirmation()"></app-confirmation-dialog>
+    <p>{{ confirmationMessage }}</p>
+  `,
+})
+export class ParentComponent {
+  confirmationMessage: string;
+
+  onConfirmation() {
+    this.confirmationMessage = 'User confirmed the action!';
+  }
+}
+In this example, the child component emits a confirmation event when the user clicks the "Confirm" button, and the parent component responds to the confirmation with (confirmed)="onConfirmation()".
+
+These examples demonstrate how @Output in Angular allows child components to emit custom events that parent components can listen to and respond to, making it possible to create interactive and dynamic applications.
+
+
+3. @ViewChild:
+
+The @ViewChild decorator allows you to access a child component or an HTML element within the component's view. This is particularly useful for programmatically interacting with child components or DOM elements.
+
+Example:
+// ParentComponent
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child></app-child>
+  `,
+})
+export class ParentComponent implements AfterViewInit {
+  @ViewChild(ChildComponent) child: ChildComponent;
+
+  ngAfterViewInit() {
+    this.child.doSomething(); // Call a method in the ChildComponent
+  }
+}
+
+// ChildComponent
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>Child Component</p>
+  `,
+})
+export class ChildComponent {
+  doSomething() {
+    console.log('Child component did something.');
+  }
+}
+In this example, the @ViewChild decorator is used to access the ChildComponent instance in the ParentComponent. This allows the parent component to call methods or access properties of the child component.
+
+Example 1: Accessing Child Component Methods
+
+In this example, the parent component uses @ViewChild to access a method in the child component and invoke it.
+
+Child Component:
+
+child.component.ts:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>Child Component</p>
+  `,
+})
+export class ChildComponent {
+  sayHello() {
+    console.log('Hello from the child component!');
+  }
+}
+Parent Component:
+
+parent.component.ts:
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child></app-child>
+    <button (click)="invokeChildMethod()">Invoke Child Method</button>
+  `,
+})
+export class ParentComponent implements AfterViewInit {
+  @ViewChild(ChildComponent) childComponent: ChildComponent;
+
+  ngAfterViewInit() {
+    // Access child component after view is initialized
+  }
+
+  invokeChildMethod() {
+    this.childComponent.sayHello();
+  }
+}
+In this example, @ViewChild is used in the parent component to get a reference to the ChildComponent. The parent component then calls the sayHello method on the child component.
+
+Example 2: Accessing Child Component Properties
+
+In this example, the parent component uses @ViewChild to access a property in the child component.
+
+Child Component:
+
+child.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>Child Component</p>
+  `,
+})
+export class ChildComponent {
+  message = 'Hello from the child component!';
+}
+Parent Component:
+
+parent.component.ts:
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child></app-child>
+    <p>{{ childComponent.message }}</p>
+  `,
+})
+export class ParentComponent implements AfterViewInit {
+  @ViewChild(ChildComponent) childComponent: ChildComponent;
+
+  ngAfterViewInit() {
+    // Access child component after view is initialized
+  }
+}
+In this example, @ViewChild is used in the parent component to get a reference to the ChildComponent. The parent component then displays the message property from the child component.
+
+Example 3: Accessing DOM Element in Child Component
+
+In this example, the parent component uses @ViewChild to access a DOM element in the child component.
+
+Child Component:
+
+child.component.ts:
+import { Component, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p #childParagraph>Child Component</p>
+  `,
+})
+export class ChildComponent {
+  constructor(private el: ElementRef) {}
+
+  getParagraphText(): string {
+    return this.el.nativeElement.innerText;
+  }
+}
+Parent Component:
+
+parent.component.ts:
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child></app-child>
+    <p>{{ childComponent.getParagraphText() }}</p>
+  `,
+})
+export class ParentComponent implements AfterViewInit {
+  @ViewChild(ChildComponent) childComponent: ChildComponent;
+
+  ngAfterViewInit() {
+    // Access child component and call the getParagraphText method
+  }
+}
+In this example, @ViewChild is used in the parent component to get a reference to the ChildComponent. The parent component then calls the getParagraphText method on the child component to retrieve the text content of the <p> element.
+
+These examples demonstrate how @ViewChild in Angular allows parent components to interact with child components or access elements within them, providing a powerful mechanism for communication and coordination between different parts of the application.
+
+These decorators are powerful tools for component communication and interaction in Angular applications. They help you build more modular and flexible components by enabling data sharing, event handling, and access to child components or DOM elements.
+
+4. Template reference variables:
+In Angular, you can use template reference variables to achieve communication from a child component to a parent component. Template reference variables are local variables declared in a template that can refer to a DOM element or an Angular component. Here's an example demonstrating how you can use a template reference variable to pass data from a child to a parent:
+
+Child Component:
+
+child.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <button (click)="sendMessage()">Send Message</button>
+  `,
+})
+export class ChildComponent {
+  message = 'Hello from the child component!';
+
+  sendMessage() {
+    console.log('Sending message to parent');
+  }
+}
+Parent Component:
+
+parent.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child #childRef></app-child>
+    <button (click)="receiveMessage(childRef.message)">Receive Message</button>
+  `,
+})
+export class ParentComponent {
+  receiveMessage(message: string) {
+    console.log('Received message from child:', message);
+  }
+}
+In this example:
+
+In the ChildComponent, a button triggers the sendMessage method.
+
+In the ParentComponent, the child component is included with the #childRef template reference variable. The Receive Message button has a click event that calls the receiveMessage method, passing the value of childRef.message as an argument.
+
+The receiveMessage method in the ParentComponent logs the received message.
+
+By using the template reference variable (#childRef), the parent component gains access to the child component's public properties and methods. This is a simple form of communication between the child and parent components using template reference variables.

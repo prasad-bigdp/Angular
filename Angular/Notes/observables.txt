@@ -1,0 +1,90 @@
+Observables are a key concept in reactive programming and are heavily used in Angular for handling asynchronous operations. They represent a stream of values over time, and you can subscribe to observables to receive notifications when new values are emitted. Here, I'll explain observables in detail and provide four different examples to illustrate their usage.
+
+Key Concepts:
+Observables Creation:
+
+Observables can be created using various methods such as of, from, interval, and custom creation.
+Subscription:
+
+Observables are lazy; they don't start emitting values until someone subscribes to them. The subscribe method is used to subscribe to an observable.
+Unsubscription:
+
+Subscriptions need to be explicitly unsubscribed to avoid memory leaks. Angular provides lifecycle hooks like ngOnDestroy to handle unsubscription.
+Example 1: Creating a Basic Observable
+typescript
+Copy code
+import { Observable } from 'rxjs';
+
+const simpleObservable = new Observable((observer) => {
+  observer.next('Hello');
+  observer.next('World');
+  observer.complete();
+});
+
+
+/*observables - states--> next, completed, error*/
+simpleObservable.subscribe(
+  (value) => console.log(value),
+  (error) => console.error(error),
+  () => console.log('Complete')
+);
+Example 2: Using Operators with Observables
+
+import { of } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+
+const numbersObservable = of(1, 2, 3, 4, 5);
+
+const squaredEvenNumbers = numbersObservable.pipe(
+  filter((num) => num % 2 === 0),
+  map((num) => num * num)
+);
+
+squaredEvenNumbers.subscribe((result) => console.log(result));
+Example 3: Handling HTTP Requests with Observables
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DataService {
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  constructor(private http: HttpClient) {}
+
+  getPosts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+}
+Example 4: Handling Events with Observables
+
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { fromEvent } from 'rxjs';
+
+@Component({
+  selector: 'app-root',
+  template: '<button #myButton>Click me</button>',
+})
+export class AppComponent implements AfterViewInit {
+  @ViewChild('myButton') myButton: ElementRef;
+
+  ngAfterViewInit(): void {
+    const buttonClickObservable = fromEvent(this.myButton.nativeElement, 'click');
+
+    buttonClickObservable.subscribe(() => console.log('Button clicked!'));
+  }
+}
+In these examples:
+
+Example 1: Demonstrates creating a basic observable with the Observable class, emitting values ('Hello' and 'World') and completing the observable.
+
+Example 2: Illustrates using operators like filter and map to transform values emitted by an observable.
+
+Example 3: Shows how to use observables for handling HTTP requests in Angular services.
+
+Example 4: Demonstrates using fromEvent to create an observable from a DOM event (button click in this case).
+
+Observables are a fundamental part of Angular's reactive programming model, allowing you to handle asynchronous events, manage data streams, and compose complex asynchronous operations. Understanding observables is crucial for effective Angular development.

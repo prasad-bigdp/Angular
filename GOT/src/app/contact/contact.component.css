@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.form-card,
+.output-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+h1 {
+  font-family: oswald;
+  font-size: 30px;
+}
+h3 {
+  font-family: oswald;
+  font-size: 16px;
+  font-weight: bold;
+}
+.contact-form {
+  width: 115%;
+}
+
+.full-width {
+  width: 80%;
+}
+
+.mat-form-field {
+  width: 90%;
+}
+
+.mat-input-element {
+  height: 40px;
+  font-size: 16px;
+}
+
+.output-card {
+  width: 370px;
+  background-color: white;
+  margin-left: 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.output-title {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: oswald;
+  text-align: center;
+}
+
+.output-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: oswald;
+}

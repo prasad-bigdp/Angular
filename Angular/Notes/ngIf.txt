@@ -1,0 +1,74 @@
+In Angular, ngIf, ngIfThen, ngIfElse, and ngIfThenElse are structural directives used for conditionally rendering or hiding elements in the template. They provide a way to control the visibility of elements based on a specified condition. Let's explore each of them in detail with examples.
+
+ngIf Directive:
+
+The ngIf directive is the basic conditional directive that shows or hides an element based on a condition.
+It accepts an expression and only renders the element if the expression is truthy.
+
+<!-- Basic ngIf Directive -->
+<div *ngIf="showElement">
+  This element is displayed when showElement is true.
+</div>
+
+// Component Class
+export class AppComponent {
+  showElement = true;
+}
+ngIfThen Directive:
+
+The ngIfThen directive, combined with ngIf, allows you to render a template when the condition is true.
+
+<!-- ngIf with ngIfThen Directive -->
+<div *ngIf="userLoggedIn; then loggedInTemplate else notLoggedInTemplate"></div>
+
+<ng-template #loggedInTemplate>
+  Welcome, User!
+</ng-template>
+
+<ng-template #notLoggedInTemplate>
+  Please log in to access this content.
+</ng-template>
+
+// Component Class
+export class AppComponent {
+  userLoggedIn = true;
+}
+ngIfElse Directive:
+
+The ngIfElse directive is used with ngIf to render a template when the condition is false.
+
+<!-- ngIf with ngIfElse Directive -->
+<div *ngIf="isAdmin; else regularUserTemplate">
+  You are an admin.
+</div>
+
+<ng-template #regularUserTemplate>
+  You are a regular user.
+</ng-template>
+typescript
+Copy code
+// Component Class
+export class AppComponent {
+  isAdmin = false;
+}
+ngIfThenElse Directive:
+
+The ngIfThenElse directive allows you to specify templates for both true and false conditions in a more compact way.
+html
+Copy code
+<!-- ngIf with ngIfThenElse Directive -->
+<div *ngIf="isSpecialUser; then specialUser else regularUser">
+</div>
+
+<ng-template #specialUser>
+  You are a special user.
+</ng-template>
+
+<ng-template #regularUser>
+  You are a regular user.
+</ng-template>
+
+// Component Class
+export class AppComponent {
+  isSpecialUser = true;
+}

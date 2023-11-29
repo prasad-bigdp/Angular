@@ -1,0 +1,7 @@
+<div *ngIf="product">
+    <div class="container" style="margin:50px;display: flex;justify-content: center;align-items: center;">
+            <img src="{{product.image}}" alt="{{product.title}}" height="200" width="200">
+            <p>{{product.title}}</p>
+            <button mat-raised-button color="primary">add to cart</button>
+    </div>
+</div>

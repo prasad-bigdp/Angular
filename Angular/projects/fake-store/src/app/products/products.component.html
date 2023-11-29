@@ -1,0 +1,8 @@
+<div class="container">
+    <div *ngFor="let pro of products" class="card" (click)="navigateTo(pro.id)">
+       
+            <img src="{{pro.image}}" alt="" class="card-image">
+            <p>{{pro.title}}</p>
+  
+    </div>
+</div>

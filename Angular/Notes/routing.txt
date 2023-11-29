@@ -1,0 +1,314 @@
+In Angular, route parameters are used to pass values within the URL and are a crucial part of building dynamic and interactive applications. They allow you to capture values from the URL and use them within your components. Here, I'll explain route parameters in detail and provide four examples to illustrate their usage.
+
+Basic Concepts:
+Defining Route Parameters:
+
+Route parameters are specified in the route path using the :parameterName syntax.
+typescript
+Copy code
+const routes: Routes = [
+  { path: 'users/:id', component: UserDetailComponent },
+];
+Activating Route Parameters:
+
+To activate route parameters, you use the ActivatedRoute service, which provides access to information about the current route, including parameters.
+typescript
+Copy code
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {}
+Accessing Route Parameters:
+
+Route parameters are accessed using the params observable provided by ActivatedRoute. You can subscribe to this observable to react to changes in route parameters.
+typescript
+Copy code
+this.route.params.subscribe((params) => {
+  const userId = params.id;
+  // Do something with userId
+});
+Example 1: Basic Route Parameter
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'users/:id', component: UserDetailComponent },
+];
+
+// user-detail.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.params.subscribe((params) => {
+    const userId = params.id;
+    console.log('User ID:', userId);
+  });
+}
+Example 2: Multiple Route Parameters
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'posts/:category/:id', component: PostDetailComponent },
+];
+
+// post-detail.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.params.subscribe((params) => {
+    const categoryId = params.category;
+    const postId = params.id;
+    console.log('Category ID:', categoryId);
+    console.log('Post ID:', postId);
+  });
+}
+Example 3: Optional Route Parameters
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'books/:genre', component: BookListComponent },
+  { path: 'books', component: BookListComponent },
+];
+
+// book-list.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.params.subscribe((params) => {
+    const genre = params.genre || 'all';
+    console.log('Selected Genre:', genre);
+  });
+}
+Example 4: Route Parameters with Data
+
+// app-routing.module.ts
+const routes: Routes = [
+  {
+    path: 'products/:id',
+    component: ProductDetailComponent,
+    data: { title: 'Product Detail' },
+  },
+];
+
+// product-detail.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.params.subscribe((params) => {
+    const productId = params.id;
+    console.log('Product ID:', productId);
+  });
+
+  const routeData = this.route.snapshot.data;
+  const pageTitle = routeData.title;
+  console.log('Page Title:', pageTitle);
+}
+These examples cover different scenarios involving route parameters, such as basic parameters, multiple parameters, optional parameters, and using route parameters in conjunction with route data. Understanding how to work with route parameters is essential for building dynamic and data-driven Angular applications.
+
+
+Query parameters in Angular allow you to pass optional parameters in the URL, typically for filtering or providing additional information to a component. Unlike route parameters, query parameters don't affect the route path directly but can be accessed and manipulated within components. Here, I'll explain query parameters in detail and provide four examples to illustrate their usage.
+
+Basic Concepts:
+Defining Query Parameters:
+
+Query parameters are specified in the URL after a ? and separated by &. For example: /users?id=1&name=John.
+Activating Query Parameters:
+
+To activate query parameters, you use the ActivatedRoute service, similar to route parameters.
+typescript
+Copy code
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {}
+Accessing Query Parameters:
+
+Query parameters are accessed using the queryParam method of ActivatedRoute. You can subscribe to this method to react to changes in query parameters.
+typescript
+Copy code
+this.route.queryParams.subscribe((params) => {
+  const userId = params.id;
+  const userName = params.name;
+  // Do something with userId and userName
+});
+Example 1: Basic Query Parameter
+typescript
+Copy code
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'users', component: UserListComponent },
+];
+typescript
+Copy code
+// user-list.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.queryParams.subscribe((params) => {
+    const userId = params.id;
+    console.log('User ID:', userId);
+  });
+}
+Example 2: Multiple Query Parameters
+typescript
+Copy code
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'posts', component: PostListComponent },
+];
+typescript
+Copy code
+// post-list.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.queryParams.subscribe((params) => {
+    const categoryId = params.category;
+    const authorId = params.author;
+    console.log('Category ID:', categoryId);
+    console.log('Author ID:', authorId);
+  });
+}
+Example 3: Optional Query Parameters
+typescript
+Copy code
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'books', component: BookListComponent },
+];
+typescript
+Copy code
+// book-list.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.queryParams.subscribe((params) => {
+    const genre = params.genre || 'all';
+    console.log('Selected Genre:', genre);
+  });
+}
+Example 4: Query Parameters with Default Values
+
+// app-routing.module.ts
+const routes: Routes = [
+  {
+    path: 'products',
+    component: ProductListComponent,
+    data: { defaultCategory: 'electronics' },
+  },
+];
+
+// product-list.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  this.route.queryParams.subscribe((params) => {
+    const category = params.category || this.route.snapshot.data.defaultCategory;
+    console.log('Selected Category:', category);
+  });
+}
+These examples cover different scenarios involving query parameters, such as basic parameters, multiple parameters, optional parameters, and using query parameters with default values. Understanding how to work with query parameters is essential for building flexible and interactive Angular applications
+
+Nested Child Routes:
+Example 1: Basic Nested Child Routes
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'dashboard', component: DashboardComponent, children: [
+    { path: 'profile', component: ProfileComponent },
+    { path: 'settings', component: SettingsComponent },
+  ]},
+];
+Example 2: Nested Route with Parameter
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'users/:id', component: UserComponent, children: [
+    { path: 'details', component: UserDetailsComponent },
+  ]},
+];
+Example 3: Multiple Levels of Nesting
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'blog', component: BlogComponent, children: [
+    { path: 'post/:id', component: PostComponent, children: [
+      { path: 'comments', component: CommentsComponent },
+    ]},
+  ]},
+];
+Example 4: Lazy Loading Nested Module
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+];
+Handling Not-Found Routes:
+Example 1: Basic Not-Found Route
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'users', component: UsersComponent },
+  { path: '**', component: NotFoundComponent },
+];
+Example 2: Redirecting to Not-Found
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent },
+];
+Example 3: Custom Not-Found Component
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'products', component: ProductsComponent },
+  { path: '**', component: CustomNotFoundComponent },
+];
+Example 4: Not-Found Redirect with Route Parameters
+
+// app-routing.module.ts
+const routes: Routes = [
+  { path: 'articles/:id', component: ArticleComponent },
+  { path: '**', redirectTo: '/articles/1' },
+];
+Using routerLink for Navigation:
+Example 1: Basic routerLink
+
+<!-- app.component.html -->
+<a routerLink="/">Home</a>
+<a routerLink="/about">About</a>
+Example 2: routerLink with Parameters
+
+<!-- user-list.component.html -->
+<a [routerLink]="['/users', user.id]">{{ user.name }}</a>
+Example 3: routerLink with Query Parameters
+
+<!-- product-list.component.html -->
+<a [routerLink]="['/products']" [queryParams]="{ category: 'electronics' }">Electronics</a>
+Example 4: routerLink with Fragment
+
+<!-- contact.component.html -->
+<a routerLink="/contact#email">Email</a>
+Using routerLinkActive for Active Links:
+Example 1: Basic routerLinkActive
+
+<!-- app.component.html -->
+<a routerLink="/" routerLinkActive="active">Home</a>
+<a routerLink="/about" routerLinkActive="active">About</a>
+Example 2: routerLinkActive with Multiple Classes
+
+<!-- app.component.html -->
+<a routerLink="/" routerLinkActive="active bold" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+<a routerLink="/about" routerLinkActive="active bold">About</a>
+Example 3: routerLinkActive for Nested Routes
+
+<!-- dashboard.component.html -->
+<a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+<a routerLink="/dashboard/profile" routerLinkActive="active">Profile</a>
+<a routerLink="/dashboard/settings" routerLinkActive="active">Settings</a>
+Example 4: routerLinkActive with Custom Class
+
+<!-- app.component.html -->
+<a routerLink="/" routerLinkActive="custom-active">Home</a>
+<a routerLink="/about" routerLinkActive="custom-active">About</a>
+These examples cover various aspects of Angular routing, including nested child routes, handling not-found routes, using routerLink for navigation, and routerLinkActive for highlighting active links. Feel free to adapt these examples to suit the specific requirements of your Angular application.

@@ -1,0 +1,26 @@
+.background-container {
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease;
+  height: 92vh;
+  text-align: center;
+  font-weight: bold;
+}
+
+h1 {
+  position: absolute;
+  font-size: 4em;
+  color: black;
+  left: 49.5%;
+  transform: translateX(-50%);
+  font-family: Oswald;
+}
+
+h1:first-child {
+  top: 8%;
+}
+
+h1:last-child {
+  top: 18%;
+}

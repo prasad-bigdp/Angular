@@ -1,0 +1,65 @@
+<div class="container">
+  <mat-card class="form-card">
+    <h1>Submit Your Information</h1>
+
+    <form class="contact-form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Email" formControlName="email" />
+      </mat-form-field>
+
+      <div formArrayName="characters">
+        <div
+          *ngFor="let skill of myForm.get('characters').controls; let i = index"
+        >
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Your Favourite Characters?"
+              [formControlName]="i"
+            />
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removeCharacters(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <mat-icon mat-icon-button (click)="addCharacters()"
+          >add_circle</mat-icon
+        >
+      </div>
+      <br />
+
+      <button mat-raised-button type="submit">Submit</button>
+    </form>
+  </mat-card>
+
+  <div *ngIf="submitted">
+    <mat-card class="output-card">
+      <mat-card-title class="output-title">Your Submitted Info</mat-card-title>
+
+      <mat-card-content class="output-content">
+        <div class="output-detail">
+          <p>
+            <strong>Name:</strong>
+            {{ myForm.get("name").value }}
+          </p>
+        </div>
+        <div class="output-detail">
+          <p><strong>Email:</strong> {{ myForm.get("email").value }}</p>
+        </div>
+
+        <h3>Favorite Characters:</h3>
+        <div
+          *ngFor="let character of myForm.get('characters').value"
+          class="output-detail"
+        >
+          {{ character }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

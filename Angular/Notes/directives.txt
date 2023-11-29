@@ -1,0 +1,71 @@
+Directives in Angular are special markers on DOM elements that are used to add behavior or manipulate the DOM. They are a fundamental part of building Angular applications as they allow you to extend HTML with new attributes, elements, or even structural patterns.
+
+There are three types of directives in Angular:
+
+Component Directives:
+
+These are the most common directives in Angular and are represented as components. They have their templates and can be used as custom HTML tags in your application.
+They encapsulate a view and its logic.
+Example: Creating a custom component directive that displays a user profile.
+
+// Custom Component Directive
+@Component({
+  selector: 'app-user-profile',
+  template: '<h2>{{ user.name }}</h2><p>{{ user.email }}</p>',
+})
+export class UserProfileComponent {
+  @Input() user: User;
+}
+
+<!-- Using the Component Directive -->
+<app-user-profile [user]="currentUser"></app-user-profile>
+Attribute Directives:
+
+These directives are used to change the appearance or behavior of an element, component, or another directive.
+They are applied as attributes within HTML elements.
+Example: Angular's built-in ngClass directive, which allows you to dynamically set CSS classes.
+
+<!-- Using the ngClass Attribute Directive -->
+<div [ngClass]="{ 'error': isError, 'highlight': isHighlighted }">Content</div>
+Structural Directives:
+
+These directives change the structure of the DOM by adding or removing elements based on a condition.
+They are applied as attributes in HTML elements, typically with an asterisk (*) prefix.
+Example: Angular's built-in ngFor directive, which is used for rendering lists.
+
+<!-- Using the ngFor Structural Directive -->
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+Custom Directives:
+
+You can also create your own custom attribute and structural directives. Here's an example of creating a simple custom attribute directive:
+
+Custom Attribute Directive:
+
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+  @Input() appHighlight: string; // Input to set the highlight color
+
+  constructor(private el: ElementRef) { }
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.highlight(this.appHighlight || 'yellow');
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.highlight(null);
+  }
+
+  private highlight(color: string | null) {
+    this.el.nativeElement.style.backgroundColor = color;
+  }
+}
+
+<!-- Using the Custom Attribute Directive -->
+<p [appHighlight]="'lightblue'">Highlight me on hover</p>
+Directives are a powerful feature in Angular, enabling you to create reusable and modular code. Angular provides many built-in directives, and you can create your own to enhance the functionality of your application. They play a crucial role in controlling the structure and behavior of your application's DOM elements.

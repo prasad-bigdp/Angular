@@ -1,0 +1,6 @@
+<div class="todo-list container">
+<div *ngFor="let t of tasks;index as i" class="row">
+    <div class="flex">{{t}}<button (click)="delete(i)">delete</button></div>
+</div>
+
+</div>

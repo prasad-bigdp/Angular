@@ -1,0 +1,135 @@
+In Angular, components go through a series of lifecycle events from creation to destruction. These lifecycle events provide developers with hooks to execute code at specific moments during the component's existence. Understanding these lifecycle methods is crucial for managing component behavior and optimizing performance. Here are the key Angular lifecycle methods with explanations and examples:
+
+1. ngOnChanges
+This method is called when Angular sets or resets data-bound input properties.
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: '<p>{{ message }}</p>',
+})
+export class ChildComponent implements OnChanges {
+  @Input() inputMessage: string;
+
+  message: string;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.inputMessage) {
+      this.message = `Input changed to: ${changes.inputMessage.currentValue}`;
+    }
+  }
+}
+2. ngOnInit
+This method is called once after the component is initialized.
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p>{{ message }}</p>',
+})
+export class ExampleComponent implements OnInit {
+  message: string;
+
+  ngOnInit(): void {
+    this.message = 'Component initialized!';
+  }
+}
+3. ngDoCheck
+This method is called during every change detection cycle.
+
+import { Component, DoCheck } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p>{{ message }}</p>',
+})
+export class ExampleComponent implements DoCheck {
+  message: string;
+
+  ngDoCheck(): void {
+    this.message = 'Change detection cycle triggered!';
+  }
+}
+4. ngAfterContentInit
+This method is called after the component's content (projected content) has been initialized.
+
+import { Component, AfterContentInit, ContentChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<ng-content></ng-content>',
+})
+export class ExampleComponent implements AfterContentInit {
+  @ContentChild('content') contentElement: ElementRef;
+
+  ngAfterContentInit(): void {
+    console.log('Content initialized:', this.contentElement.nativeElement.textContent);
+  }
+}
+5. ngAfterContentChecked
+This method is called after every check of the component's content.
+
+import { Component, AfterContentChecked, ContentChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<ng-content></ng-content>',
+})
+export class ExampleComponent implements AfterContentChecked {
+  @ContentChild('content') contentElement: ElementRef;
+
+  ngAfterContentChecked(): void {
+    console.log('Content checked:', this.contentElement.nativeElement.textContent);
+  }
+}
+6. ngAfterViewInit
+This method is called after the component's view (and its child views) has been initialized.
+
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p #viewElement>View Content</p>',
+})
+export class ExampleComponent implements AfterViewInit {
+  @ViewChild('viewElement') viewElement: ElementRef;
+
+  ngAfterViewInit(): void {
+    console.log('View initialized:', this.viewElement.nativeElement.textContent);
+  }
+}
+7. ngAfterViewChecked
+This method is called after every check of the component's view (and its child views).
+
+import { Component, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p #viewElement>View Content</p>',
+})
+export class ExampleComponent implements AfterViewChecked {
+  @ViewChild('viewElement') viewElement: ElementRef;
+
+  ngAfterViewChecked(): void {
+    console.log('View checked:', this.viewElement.nativeElement.textContent);
+  }
+}
+### 8. ngOnDestroy
+
+This method is called just before the component is destroyed.
+
+import { Component, OnDestroy } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p>{{ message }}</p>',
+})
+export class ExampleComponent implements OnDestroy {
+  message: string;
+
+  ngOnDestroy(): void {
+    this.message = 'Component destroyed!';
+  }
+}
+These are the primary lifecycle hooks in Angular. Understanding when each method is called helps you manage the component's behavior throughout its lifecycle. It's important to note that the ngOnInit and ngOnDestroy methods are commonly used, while the others are more specialized and may be needed in specific scenarios.

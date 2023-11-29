@@ -1,0 +1,18 @@
+<!-- <h1>API Demo</h1>
+<div class="productsContainer" #x>
+
+  <div *ngFor="let val of data">
+    <div class="product" style="width: 200px;height: 400px;">
+      <img src="{{val.image}}" alt="{{val.title}}" height="100" width="100">
+      <h1>{{val.title}}</h1>
+      <p>{{val.price}}</p>
+    </div>
+</div>
+</div> -->
+<h1>pipes Demo</h1>
+<h1>{{title|ppc:'hello':'bye'}}</h1>
+<p>Price:{{price|currency:'INR'}}</p>
+<p>object details are :{{person|json}}</p>
+<p>{{d|date:'dd/mm/yyyy'}}</p>
+
+
