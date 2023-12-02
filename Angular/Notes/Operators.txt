@@ -1,0 +1,108 @@
+Certainly! Let's go through each of the mentioned operators with examples:
+
+Creation Operators:
+
+of(...): Emits values in sequence.
+from([2,3]).subscribe
+
+from is iterable
+from([2,3,5,8])
+import { of } from 'rxjs';
+
+const observable = of(1, 2, 3);
+observable.subscribe(value => console.log(value));
+from(iterable): Converts an iterable, array, promise, or observable to an observable.
+
+import { from } from 'rxjs';
+
+const arrayObservable = from([1, 2, 3]);
+arrayObservable.subscribe(value => console.log(value));
+Transformation Operators:
+
+map(project: function): Transforms each value using the provided function.
+
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+of(8,7,6,8).pipe(map(value=> val/2)).subscribe(
+    (data)=>console.log(data)
+)
+
+
+
+const observable = of(1, 2, 3);
+const mappedObservable = observable.pipe(map(value => value * 2));
+mappedObservable.subscribe(value => console.log(value));
+pluck(...properties): Extracts the specified property values from each emitted object.
+
+import { from } from 'rxjs';
+import { pluck } from 'rxjs/operators';
+
+const objObservable = from([{ name: 'John', age: 25 }, { name: 'Jane', age: 30 }]);
+const nameObservable = objObservable.pipe(pluck('name'));
+nameObservable.subscribe(name => console.log(name));
+switchMap(project: function): Projects each source value to an observable, then flattens the observables into one observable.
+
+import { fromEvent, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+const clickObservable = fromEvent(document, 'click');
+const switchedObservable = clickObservable.pipe(switchMap(() => interval(1000)));
+switchedObservable.subscribe(value => console.log(value));
+Filtering Operators:
+
+filter(predicate: function): Emits only values that satisfy the provided condition.
+
+import { of } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+const observable = of(1, 2, 3, 4, 5);
+const filteredObservable = observable.pipe(filter(value => value % 2 === 0));
+filteredObservable.subscribe(value => console.log(value));
+take(count: number): Emits only the first n values before completing.
+
+
+import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+const observable = interval(1000);
+const takenObservable = observable.pipe(take(5));
+takenObservable.subscribe(value => console.log(value));
+debounceTime(duration: number): Emits a value only if there is no subsequent value within the specified time.
+
+import { fromEvent } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+
+const inputElement = document.getElementById('input');
+const inputObservable = fromEvent(inputElement, 'input');
+const debouncedObservable = inputObservable.pipe(debounceTime(300));
+debouncedObservable.subscribe(event => console.log(event));
+Combination Operators:
+
+merge(...observables): Merges multiple observables into a single observable.
+
+import { merge, interval } from 'rxjs';
+
+const observable1 = interval(1000);
+const observable2 = interval(500);
+const mergedObservable = merge(observable1, observable2);
+mergedObservable.subscribe(value => console.log(value));
+concat(...observables): Concatenates multiple observables sequentially.
+
+
+import { concat, of } from 'rxjs';
+
+const observable1 = of(1, 2, 3);
+const observable2 = of(4, 5, 6);
+const concatenatedObservable = concat(observable1, observable2);
+concatenatedObservable.subscribe(value => console.log(value));
+combineLatest(...observables): Combines the latest values from multiple observables into an array.
+
+
+import { combineLatest, interval } from 'rxjs';
+
+const observable1 = interval(1000);
+const observable2 = interval(500);
+const combinedObservable = combineLatest(observable1, observable2);
+combinedObservable.subscribe(values => console.log(values));
+These are basic examples to get you started. For a more in-depth understanding and exploration of RxJS operators, it's recommended to refer to the official RxJS documentation and experiment with different use cases.

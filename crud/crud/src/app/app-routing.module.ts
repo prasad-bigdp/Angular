@@ -9,6 +9,9 @@ const routes: Routes = [
   {
     path:'application',component:CrudComponent
   },
+  {
+    path:'material',loadChildren:(()=>import('../app/material/material.module').then((m)=>m.MaterialModule))
+  },
   { path: 'code', component: CodeComponent },
 ];
 

@@ -1,0 +1,148 @@
+HTTP interceptors in Angular allow you to intercept and modify HTTP requests or responses globally before they reach the server or after they leave the server. This provides a centralized way to handle common tasks such as adding headers, logging, error handling, and more.
+
+Here's a detailed explanation with examples:
+
+Creating an HTTP Interceptor:
+To create an HTTP interceptor, you need to implement the HttpInterceptor interface. The key methods to implement are intercept for handling requests and responses.
+
+// http-interceptor.service.ts
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class MyHttpInterceptor implements HttpInterceptor {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // You can intercept and modify the request here
+    const modifiedRequest = request.clone({
+      setHeaders: {
+        'Authorization': 'Bearer YOUR_TOKEN',
+      },
+    });
+
+    // Pass the modified request to the next handler
+    return next.handle(modifiedRequest);
+  }
+}
+Registering the Interceptor:
+You need to provide the interceptor in your module's providers array.
+
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MyHttpInterceptor } from './http-interceptor.service';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+Now, the MyHttpInterceptor will be applied globally to all HTTP requests made by your Angular application.
+
+Example: Logging Requests
+Let's modify the interceptor to log information about each request.
+
+// http-interceptor.service.ts
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class MyHttpInterceptor implements HttpInterceptor {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log(`Making a request to ${request.url}`);
+    
+    return next.handle(request).pipe(
+      tap(
+        event => console.log(`Received ${event instanceof HttpResponse ? 'response' : 'event'}`),
+        error => console.error(`Error: ${error}`)
+      )
+    );
+  }
+}
+Now, your interceptor will log information about each request and its corresponding response or error.
+
+Remember to customize the interceptor based on your application's needs, such as handling errors, modifying headers, or adding authentication tokens
+
+Project:
+Certainly! Below is a simple example of an Angular project using HTTP interceptors for logging and error handling.
+
+Step 1: Create an HTTP Interceptor
+
+// logging-interceptor.ts
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class LoggingInterceptor implements HttpInterceptor {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log(`Outgoing request: ${request.method} ${request.url}`);
+
+    return next.handle(request).pipe(
+      tap(
+        event => console.log(`Incoming response: ${event instanceof HttpResponse ? 'response' : 'event'}`),
+        error => console.error(`Error: ${error}`)
+      )
+    );
+  }
+}
+Step 2: Create an Error Handling Interceptor
+// error-interceptor.ts
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class ErrorInterceptor implements HttpInterceptor {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('HTTP error occurred:', error);
+
+        // Handle the error in your way (e.g., show a user-friendly message)
+
+        return throwError(error);
+      })
+    );
+  }
+}
+Step 3: Register the Interceptors in AppModule
+
+// app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoggingInterceptor } from './logging-interceptor';
+import { ErrorInterceptor } from './error-interceptor';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+Now, whenever your Angular app makes HTTP requests, the LoggingInterceptor will log information about the requests and responses, and the ErrorInterceptor will handle any errors that occur during the requests.
