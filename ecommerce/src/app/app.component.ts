@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   ngOnInit() {
-    this.cartService.cart.subscribe((_cart) => {
+    this.cartService.cart.subscribe((_cart:any) => {
       this.cart = _cart;
     });
   }

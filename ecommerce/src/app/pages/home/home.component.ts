@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   getProducts(): void {
     this.productsSubscription = this.storeService
       .getAllProducts(this.count, this.sort, this.category)
-      .subscribe((_products) => {
+      .subscribe((_products:any) => {
         this.products = _products;
       });
   }
