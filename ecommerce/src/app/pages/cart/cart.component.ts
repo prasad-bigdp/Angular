@@ -54,11 +54,13 @@ export class CartComponent implements OnInit, OnDestroy {
   // during the checkout lets impl the stripe service, with the session id 
   onCheckout(): void {
     this.http
-      .post('http://localhost:4242/checkout', {
+      .post('http://localhost:5252/checkout', {
         items: this.cart.items,
       })
       .subscribe(async (res: any) => {
-        let stripe = await loadStripe('pk_live_51MJGesHpDAWLppK2Sic1B1H9xoxeHNnyQZMHdlMF2rKnpOR2dms27Ml8lZr2xp3dcFZo8AyFDh4s8rf2trxduVlC00BBE8RoNc');
+        let stripe = await loadStripe(
+          'pk_test_51OKGZOSG8Nk2Bxfi41yR51jwmkTtfQNS07z6J1XBi6cnksbAGvQzIWjCsn7TOfKAvH3mhQZ0iyOKnIQpWOYu1sz100RKWkSvJl'
+        );
         stripe?.redirectToCheckout({
           sessionId: res.id,
         });
